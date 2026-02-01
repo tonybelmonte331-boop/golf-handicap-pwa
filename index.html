@@ -1,38 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Golf Handicap Tracker</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golf Handicap Tracker</title>
 
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="/golf-handicap-pwa/static/style.css">
+<!-- Stylesheet -->
+<link rel="stylesheet" href="/golf-handicap-pwa/static/style.css">
 
-  <!-- PWA Manifest -->
-  <link rel="manifest" href="/golf-handicap-pwa/static/manifest.json">
+<!-- PWA Manifest -->
+<link rel="manifest" href="/golf-handicap-pwa/static/manifest.json">
 
-  <!-- Theme Color for Status Bar -->
-  <meta name="theme-color" content="#0b3d2e">
+<!-- Theme Color -->
+<meta name="theme-color" content="#0b3d2e">
 
-  <!-- Icon for browser fallback -->
-  <link rel="icon" href="/golf-handicap-pwa/static/icon.png" type="image/png">
+<!-- Favicon -->
+<link rel="icon" href="/golf-handicap-pwa/static/icon.png" type="image/png">
 </head>
 <body>
 
 <div class="container">
   <h1>🏌️ Golf Handicap Tracker</h1>
 
-  <!-- Share Instructions -->
   <div class="share-box">
-      <p>📲 Install this app to track your golf handicap offline:</p>
-      <ol>
-        <li>Tap Share</li>
-        <li>Add to Home Screen</li>
-        <li>Open as Web App</li>
-      </ol>
+    <p>📲 Install this app to track your golf handicap offline:</p>
+    <ol>
+      <li>Tap Share</li>
+      <li>Add to Home Screen</li>
+      <li>Open as Web App</li>
+    </ol>
   </div>
 
-  <!-- Golfer input -->
+  <!-- Golfer name input -->
   <label for="golferName">Golfer Name:</label>
   <input type="text" id="golferName" placeholder="Enter your name">
 
@@ -49,13 +48,13 @@
 
     <label>Slope:</label>
     <input type="number" id="slope" min="55" max="155">
-    
+
     <button id="addRoundBtn">Add Round</button>
   </div>
 
   <!-- Display Handicap -->
   <div id="handicapDisplay">
-      <h2>Current Handicap: <span id="handicap">N/A</span></h2>
+    <h2>Current Handicap: <span id="handicap">N/A</span></h2>
   </div>
 
   <!-- Round History -->
@@ -72,11 +71,10 @@
 <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/golf-handicap-pwa/static/service-worker.js')
-  .then(() => console.log('Service Worker registered'))
-  .catch(err => console.log('Service Worker registration failed', err));
+    .then(() => console.log('Service Worker registered'))
+    .catch(err => console.log('Service Worker registration failed:', err));
 }
 </script>
-
 
 </body>
 </html>
