@@ -1,89 +1,133 @@
+/* Reset / base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    background: #0b3d2e;
-    color: white;
+  background: #e8f0ea; /* light green-ish background */
+  color: #0b3d2e;     /* dark green text */
+  padding: 10px;
+  min-height: 100vh;
 }
 
+/* Container */
 .container {
-    max-width: 450px;
-    margin: auto;
-    padding: 15px;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 15px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
+/* Header */
 h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 24px;
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 15px;
+  color: #0b3d2e;
 }
 
-input, button {
-    width: 100%;
-    padding: 14px;
-    font-size: 18px;
-    margin-bottom: 12px;
-    border-radius: 10px;
-    border: none;
-}
-
-button {
-    background-color: #f9c74f;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.button-group {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 12px;
-}
-
-.button-group label {
-    flex: 1;
-    margin: 0 5px;
-}
-
-.button-group input {
-    display: none;
-}
-
-.button-group span {
-    display: block;
-    text-align: center;
-    padding: 12px;
-    background: #1b5e4b;
-    border-radius: 10px;
-}
-
-.button-group input:checked + span {
-    background: #f9c74f;
-    color: black;
-    font-weight: bold;
-}
-
-.message {
-    background: #1b5e4b;
-    padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
-.handicap {
-    text-align: center;
-    background: #f9844a;
-    padding: 15px;
-    border-radius: 10px;
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-
-ul {
-    padding-left: 20px;
-}
+/* Share instructions */
 .share-box {
-    background: #1b5e4b;
-    padding: 12px;
-    border-radius: 10px;
-    font-size: 14px;
-    margin-bottom: 15px;
+  background: #1b5e4b;
+  color: #ffffff;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-bottom: 15px;
 }
+
+.share-box ol {
+  padding-left: 20px;
+  margin-top: 5px;
+}
+
+/* Input labels */
+label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Inputs */
+input[type="text"], input[type="number"] {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 5px;
+  border: 1px solid #b5c8b0;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+/* Button */
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  background: #0b3d2e;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #145a44;
+}
+
+/* Handicap Display */
+#handicapDisplay {
+  margin-top: 20px;
+  text-align: center;
+}
+
+#handicapDisplay h2 {
+  font-size: 1.4rem;
+  color: #1b5e4b;
+}
+
+/* Round History */
+#roundHistory {
+  margin-top: 20px;
+}
+
+#roundHistory h3 {
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+  color: #0b3d2e;
+}
+
+#historyList {
+  list-style-type: none;
+}
+
+#historyList li {
+  padding: 8px 10px;
+  background: #f1f7f0;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+/* Mobile-first responsive tweaks */
+@media (min-width: 500px) {
+  body {
+    padding: 20px;
+  }
+
+  .container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+}
+
