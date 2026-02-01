@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Golf Handicap Tracker</title>
+  <link rel="stylesheet" href="static/style.css">
+  <link rel="manifest" href="static/manifest.json">
+  <meta name="theme-color" content="#0b3d2e">
+</head>
+<body>
+
+<div class="container">
+  <h1>🏌️ Golf Handicap Tracker</h1>
+
+  <p>Install this app to track your golf handicap offline.</p>
+
+  <p>
+    📲 Tap Share → Add to Home Screen → Open as Web App
+  </p>
+</div>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("static/service-worker.js");
+}
+</script>
+
+</body>
+</html>

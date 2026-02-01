@@ -1,0 +1,89 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0b3d2e;
+    color: white;
+}
+
+.container {
+    max-width: 450px;
+    margin: auto;
+    padding: 15px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+input, button {
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    border: none;
+}
+
+button {
+    background-color: #f9c74f;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.button-group label {
+    flex: 1;
+    margin: 0 5px;
+}
+
+.button-group input {
+    display: none;
+}
+
+.button-group span {
+    display: block;
+    text-align: center;
+    padding: 12px;
+    background: #1b5e4b;
+    border-radius: 10px;
+}
+
+.button-group input:checked + span {
+    background: #f9c74f;
+    color: black;
+    font-weight: bold;
+}
+
+.message {
+    background: #1b5e4b;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.handicap {
+    text-align: center;
+    background: #f9844a;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+ul {
+    padding-left: 20px;
+}
+.share-box {
+    background: #1b5e4b;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
