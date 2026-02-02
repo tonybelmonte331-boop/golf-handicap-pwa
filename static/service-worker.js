@@ -1,4 +1,4 @@
-const CACHE = "golf-handicap-v1";
+const CACHE = "golf-handicap-v2";
 
 self.addEventListener("install", e => {
   e.waitUntil(
