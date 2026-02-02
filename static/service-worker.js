@@ -1,21 +1,21 @@
-const CACHE_NAME = 'golf-handicap-cache-v1';
-const urlsToCache = [
-  '/golf-handicap-pwa/',
-  '/golf-handicap-pwa/index.html',
-  '/golf-handicap-pwa/static/style.css',
-  '/golf-handicap-pwa/static/app.js',
-  '/golf-handicap-pwa/static/icon.png',
-  '/golf-handicap-pwa/static/manifest.json'
-];
+const CACHE = "golf-handicap-v1";
 
-self.addEventListener('install', e => {
+self.addEventListener("install", e => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+    caches.open(CACHE).then(c =>
+      c.addAll([
+        "../index.html",
+        "../history.html",
+        "style.css",
+        "app.js",
+        "manifest.json"
+      ])
+    )
   );
 });
 
-self.addEventListener('fetch', e => {
+self.addEventListener("fetch", e => {
   e.respondWith(
-    caches.match(e.request).then(response => response || fetch(e.request))
+    caches.match(e.request).then(r => r || fetch(e.request))
   );
 });

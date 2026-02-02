@@ -1,73 +1,124 @@
 const STORAGE_KEY = "golfHandicapData";
 
-// Load data
+const defaultData = {
+  golfers: [],
+  rounds: [],
+  activeGolferId: null
+};
+
 function loadData() {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { golfer: "", rounds: [] };
+  return JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultData;
 }
 
-// Save data
 function saveData(data) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
-// Handicap calculation
 function calculateDifferential(score, rating, slope) {
-    return ((score - rating) * 113 / slope).toFixed(1);
+  return Math.round(((score - rating) * 113 / slope) * 10) / 10;
 }
 
-function calculateHandicap(rounds) {
-    if (rounds.length < 3) return null;
-    const diffs = rounds.map(r => r.diff).sort((a,b) => a-b);
-    const count = Math.min(8, Math.floor(diffs.length / 2));
-    const avg = diffs.slice(0,count).reduce((a,b)=>a+b,0)/count;
-    return avg.toFixed(1);
+function calculateHandicap(diffs) {
+  if (diffs.length === 0) return null;
+
+  diffs.sort((a, b) => a - b);
+  let used = 1;
+  if (diffs.length >= 20) used = 8;
+  else if (diffs.length >= 15) used = 6;
+  else if (diffs.length >= 10) used = 4;
+  else if (diffs.length >= 5) used = 2;
+
+  const avg = diffs.slice(0, used).reduce((a, b) => a + b, 0) / used;
+  return Math.round(avg * 0.96 * 10) / 10;
 }
 
-// Update UI
-function updateUI() {
-    const data = loadData();
-    document.getElementById("golferName").value = data.golfer || "";
+function populateGolfers() {
+  const data = loadData();
+  const select = document.getElementById("golferSelect");
+  if (!select) return;
 
-    const historyList = document.getElementById("historyList");
-    historyList.innerHTML = "";
-    data.rounds.forEach((r, i) => {
-        const li = document.createElement("li");
-        li.textContent = `${i+1}: ${r.holes} holes, Score: ${r.score}, Diff: ${r.diff}`;
-        historyList.appendChild(li);
-    });
+  select.innerHTML = "";
+  data.golfers.forEach(g => {
+    const o = document.createElement("option");
+    o.value = g.id;
+    o.textContent = g.name;
+    select.appendChild(o);
+  });
 
-    const handicap = calculateHandicap(data.rounds);
-    document.getElementById("handicap").textContent = handicap || "N/A";
-}
-
-// Add round
-document.getElementById("addRoundBtn").addEventListener("click", () => {
-    const golfer = document.getElementById("golferName").value || "Guest";
-    const holes = parseInt(document.getElementById("holes").value);
-    const score = parseFloat(document.getElementById("score").value);
-    const rating = parseFloat(document.getElementById("rating").value);
-    const slope = parseFloat(document.getElementById("slope").value);
-
-    if (isNaN(score) || isNaN(rating) || isNaN(slope)) {
-        alert("Please enter valid numbers for score, rating, and slope");
-        return;
-    }
-
-    const diff = calculateDifferential(score, rating, slope);
-    const data = loadData();
-    data.golfer = golfer;
-    data.rounds.push({ holes, score, rating, slope, diff });
+  select.value = data.activeGolferId;
+  select.onchange = () => {
+    data.activeGolferId = Number(select.value);
     saveData(data);
+    updateHandicap();
+  };
+}
 
-    updateUI();
-});
+function addGolfer() {
+  const input = document.getElementById("newGolferName");
+  if (!input.value) return;
 
-// Initialize UI
-updateUI();
+  const data = loadData();
+  const golfer = { id: Date.now(), name: input.value };
+  data.golfers.push(golfer);
+  data.activeGolferId = golfer.id;
+  saveData(data);
+  location.reload();
+}
 
-// Splash fade
-window.addEventListener("load", () => {
-    setTimeout(() => {
-        document.body.classList.add("loaded");
-    }, 1500);
-});
+function addRound() {
+  const data = loadData();
+  if (!data.activeGolferId) return alert("Select a golfer first");
+
+  const score = Number(document.getElementById("score").value);
+  const rating = Number(document.getElementById("rating").value);
+  const slope = Number(document.getElementById("slope").value);
+  const holes = Number(document.getElementById("holes").value);
+
+  const diff = calculateDifferential(score, rating, slope);
+
+  data.rounds.push({
+    id: Date.now(),
+    golferId: data.activeGolferId,
+    score, rating, slope, holes,
+    date: new Date().toISOString().slice(0,10),
+    differential: diff
+  });
+
+  saveData(data);
+  location.reload();
+}
+
+function updateHandicap() {
+  const data = loadData();
+  const diffs = data.rounds
+    .filter(r => r.golferId === data.activeGolferId)
+    .map(r => r.differential);
+
+  const h = calculateHandicap(diffs);
+  document.getElementById("handicapDisplay").textContent =
+    h === null ? "Not enough rounds" : h;
+}
+
+function loadHistory() {
+  const list = document.getElementById("roundList");
+  if (!list) return;
+
+  const data = loadData();
+  data.rounds.forEach(r => {
+    const li = document.createElement("li");
+    li.textContent = `${r.date} | Score ${r.score} | Diff ${r.differential}`;
+    const del = document.createElement("button");
+    del.textContent = "Delete";
+    del.onclick = () => {
+      data.rounds = data.rounds.filter(x => x.id !== r.id);
+      saveData(data);
+      location.reload();
+    };
+    li.appendChild(del);
+    list.appendChild(li);
+  });
+}
+
+populateGolfers();
+updateHandicap();
+loadHistory();
