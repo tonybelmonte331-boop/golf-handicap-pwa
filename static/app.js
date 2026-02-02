@@ -1,6 +1,6 @@
 const STORAGE_KEY = "golfHandicapData";
 
-// Load data from localStorage
+// Load data
 function loadData() {
     return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { golfer: "", rounds: [] };
 }
@@ -10,7 +10,7 @@ function saveData(data) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
-// Handicap calculation (basic USGA style)
+// Handicap calculation
 function calculateDifferential(score, rating, slope) {
     return ((score - rating) * 113 / slope).toFixed(1);
 }
@@ -40,7 +40,7 @@ function updateUI() {
     document.getElementById("handicap").textContent = handicap || "N/A";
 }
 
-// Event listeners
+// Add round
 document.getElementById("addRoundBtn").addEventListener("click", () => {
     const golfer = document.getElementById("golferName").value || "Guest";
     const holes = parseInt(document.getElementById("holes").value);
@@ -54,7 +54,6 @@ document.getElementById("addRoundBtn").addEventListener("click", () => {
     }
 
     const diff = calculateDifferential(score, rating, slope);
-
     const data = loadData();
     data.golfer = golfer;
     data.rounds.push({ holes, score, rating, slope, diff });
@@ -65,3 +64,10 @@ document.getElementById("addRoundBtn").addEventListener("click", () => {
 
 // Initialize UI
 updateUI();
+
+// Splash fade
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        document.body.classList.add("loaded");
+    }, 1500);
+});
